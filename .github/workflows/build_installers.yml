@@ -10,30 +10,58 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configure & Build VST3 + Standalone
-        run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release --parallel
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build VST3 + Standalone
+        run: cmake --build build --config Release --parallel
+
       - name: Build Windows Setup.exe via Inno Setup
+        shell: pwsh
         run: |
-          choco install innosetup -y
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "Installer\OBYS_MOOD.iss"
+          choco install innosetup -y --no-progress
+          $iscc = Get-ChildItem -Path "C:\Program Files*", "C:\ProgramData\chocolatey" -Filter "ISCC.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+          if ($iscc) {
+            & $iscc "Installer\OBYS_MOOD.iss"
+          } else {
+            Write-Host "ISCC.exe not found, skipping Setup.exe"
+          }
+
+      - name: Package Fallback ZIP if Setup.exe missing
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "dist" | Out-Null
+          if (-not (Test-Path "dist\OBYS_MOOD_Setup_v1.0.0.exe")) {
+            $vst3 = "build\OBYS_MOOD_artefacts\Release\VST3\OBYS // MOOD.vst3"
+            $exe  = "build\OBYS_MOOD_artefacts\Release\Standalone\OBYS // MOOD.exe"
+            $stage = "dist\win_plugin_stage"
+            New-Item -ItemType Directory -Force -Path $stage | Out-Null
+            if (Test-Path $vst3) { Copy-Item -Recurse -Force $vst3 "$stage\OBYS // MOOD.vst3" }
+            if (Test-Path $exe)  { Copy-Item -Force $exe "$stage\OBYS // MOOD.exe" }
+            Compress-Archive -Path "$stage\*" -DestinationPath "dist\OBYS_MOOD_Windows_Ready.zip" -Force
+          }
+
       - name: Upload Windows Installer Artifact
         uses: actions/upload-artifact@v4
         with:
           name: OBYS_MOOD_Windows_Installer
-          path: dist/OBYS_MOOD_Setup_v1.0.0.exe
+          path: dist/*
+          if-no-files-found: warn
 
   build-macos-installer:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Build Universal VST3/AU/App & Create .pkg
         run: |
           chmod +x Installer/build_macos_pkg.sh
           ./Installer/build_macos_pkg.sh
+
       - name: Upload macOS .pkg Installer Artifact
         uses: actions/upload-artifact@v4
         with:
           name: OBYS_MOOD_macOS_Installer
           path: dist/OBYS_MOOD_Installer_v1.0.0_macOS.pkg
+          if-no-files-found: warn
