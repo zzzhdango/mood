@@ -33,12 +33,12 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path "dist" | Out-Null
           if (-not (Test-Path "dist\OBYS_MOOD_Setup_v1.0.0.exe")) {
-            $vst3 = "build\OBYS_MOOD_artefacts\Release\VST3\OBYS // MOOD.vst3"
-            $exe  = "build\OBYS_MOOD_artefacts\Release\Standalone\OBYS // MOOD.exe"
+            $vst3 = "build\OBYS_MOOD_artefacts\Release\VST3\OBYS MOOD.vst3"
+            $exe  = "build\OBYS_MOOD_artefacts\Release\Standalone\OBYS MOOD.exe"
             $stage = "dist\win_plugin_stage"
             New-Item -ItemType Directory -Force -Path $stage | Out-Null
-            if (Test-Path $vst3) { Copy-Item -Recurse -Force $vst3 "$stage\OBYS // MOOD.vst3" }
-            if (Test-Path $exe)  { Copy-Item -Force $exe "$stage\OBYS // MOOD.exe" }
+            if (Test-Path $vst3) { Copy-Item -Recurse -Force $vst3 "$stage\OBYS MOOD.vst3" }
+            if (Test-Path $exe)  { Copy-Item -Force $exe "$stage\OBYS MOOD.exe" }
             Compress-Archive -Path "$stage\*" -DestinationPath "dist\OBYS_MOOD_Windows_Ready.zip" -Force
           }
 
@@ -56,6 +56,7 @@ jobs:
 
       - name: Build Universal VST3/AU/App & Create .pkg
         run: |
+          sed -i '' 's|OBYS // MOOD|OBYS MOOD|g' Installer/build_macos_pkg.sh
           chmod +x Installer/build_macos_pkg.sh
           ./Installer/build_macos_pkg.sh
 
