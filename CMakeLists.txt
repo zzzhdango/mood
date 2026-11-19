@@ -23,7 +23,7 @@ juce_add_plugin(OBYS_MOOD
     PLUGIN_MANUFACTURER_CODE Obys
     PLUGIN_CODE Mood
     FORMATS VST3 AU Standalone
-    PRODUCT_NAME "OBYS // MOOD"
+    PRODUCT_NAME "OBYS MOOD"
 )
 
 target_sources(OBYS_MOOD
