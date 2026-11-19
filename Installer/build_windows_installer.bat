@@ -1,9 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
-title OBYS // MOOD - Windows Build and Installer Generator
+title OBYS MOOD - Windows Build and Installer Generator
 
 echo ============================================================
-echo   OBYS // MOOD v1.0.0 - Automated Build and Setup.exe Builder
+echo   OBYS MOOD v1.0.0 - Automated Build and Setup.exe Builder
 echo ============================================================
 echo.
 
@@ -25,7 +25,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [2/3] Compiling OBYS // MOOD (VST3 + Standalone)...
+echo [2/3] Compiling OBYS MOOD (VST3 + Standalone)...
 cmake --build build --config Release --parallel
 if %errorlevel% neq 0 (
     echo [ERROR] Compilation failed.
@@ -45,7 +45,7 @@ if not %ISCC_PATH%=="" (
 ) else (
     echo [WARN] Inno Setup 6 not found. Installing VST3 directly to Common Files...
     if not exist "%CommonProgramFiles%\VST3" mkdir "%CommonProgramFiles%\VST3"
-    xcopy /E /I /Y "build\OBYS_MOOD_artefacts\Release\VST3\OBYS // MOOD.vst3" "%CommonProgramFiles%\VST3\OBYS // MOOD.vst3"
+    xcopy /E /I /Y "build\OBYS_MOOD_artefacts\Release\VST3\OBYS MOOD.vst3" "%CommonProgramFiles%\VST3\OBYS MOOD.vst3"
     echo [DONE] VST3 installed directly into %CommonProgramFiles%\VST3\
 )
 

@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-APP_NAME="OBYS // MOOD"
+APP_NAME="OBYS MOOD"
 VERSION="1.0.0"
 PKG_ID="agency.obys.dsp.mood"
 BUILD_DIR="build"
