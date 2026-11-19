@@ -123,6 +123,8 @@ void ObysMoodAudioProcessor::processClockTick (float inL, float inR,
                                                bool loopOn, int loopMode, float loopLen, float loopMod,
                                                int rampTarget, bool rampBounce, bool rampSquare)
 {
+    juce::ignoreUnused (mixVal, rampBounce, rampSquare);
+
     if (rampTarget > 0)
     {
         const float modVal = currentRamp;

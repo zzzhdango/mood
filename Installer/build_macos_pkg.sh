@@ -31,7 +31,7 @@ cp -R "$BUILD_DIR/OBYS_MOOD_artefacts/Release/VST3/$APP_NAME.vst3" "$STAGING_DIR
 cp -R "$BUILD_DIR/OBYS_MOOD_artefacts/Release/AU/$APP_NAME.component" "$STAGING_DIR/Library/Audio/Plug-Ins/Components/"
 cp -R "$BUILD_DIR/OBYS_MOOD_artefacts/Release/Standalone/$APP_NAME.app" "$STAGING_DIR/Applications/"
 
-echo "[4/4] Building signed/unsigned macOS .pkg installer..."
+echo "[4/4] Building macOS .pkg installer..."
 pkgbuild \
   --root "$STAGING_DIR" \
   --identifier "$PKG_ID" \

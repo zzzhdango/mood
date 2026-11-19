@@ -186,7 +186,11 @@ void ObysMoodAudioProcessorEditor::paint (juce::Graphics& g)
     const int col3W   = totalW / 3;
 
     g.setColour (ink);
-    g.drawRect (margin, margin, totalW, getHeight() - margin * 2, 1.5f);
+    g.drawRect (static_cast<float> (margin),
+                static_cast<float> (margin),
+                static_cast<float> (totalW),
+                static_cast<float> (getHeight() - margin * 2),
+                1.5f);
     g.drawHorizontalLine (topRowY, static_cast<float> (margin), static_cast<float> (getWidth() - margin));
     g.drawHorizontalLine (botRowY, static_cast<float> (margin), static_cast<float> (getWidth() - margin));
 

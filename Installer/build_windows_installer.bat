@@ -1,9 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
-title OBYS // MOOD - Windows Build & Installer Generator
+title OBYS // MOOD - Windows Build and Installer Generator
 
 echo ============================================================
-echo   OBYS // MOOD v1.0.0 - Automated Build ^& Setup.exe Builder
+echo   OBYS // MOOD v1.0.0 - Automated Build and Setup.exe Builder
 echo ============================================================
 echo.
 
@@ -17,7 +17,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [1/3] Configuring CMake & fetching JUCE 8.0.4...
+echo [1/3] Configuring CMake and fetching JUCE 8.0.4...
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 if %errorlevel% neq 0 (
     echo [ERROR] CMake configuration failed. Make sure Visual Studio C++ Build Tools are installed.

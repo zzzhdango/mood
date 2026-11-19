@@ -1,5 +1,4 @@
 ; Inno Setup Script for OBYS // MOOD VST3 & Standalone
-; Compiles into OBYS_MOOD_Setup_v1.0.0.exe
 
 #define MyAppName "OBYS // MOOD"
 #define MyAppVersion "1.0.0"
@@ -36,9 +35,7 @@ Name: "vst3"; Description: "VST3 Audio Plugin (C:\Program Files\Common Files\VST
 Name: "standalone"; Description: "Standalone Desktop Application"; Types: full custom
 
 [Files]
-; VST3 Bundle
 Source: "..\build\OBYS_MOOD_artefacts\Release\VST3\OBYS // MOOD.vst3\*"; DestDir: "{commoncf64}\VST3\OBYS // MOOD.vst3"; Components: vst3; Flags: ignoreversion recursesubdirs createallsubdirs
-; Standalone Executable
 Source: "..\build\OBYS_MOOD_artefacts\Release\Standalone\OBYS // MOOD.exe"; DestDir: "{app}"; Components: standalone; Flags: ignoreversion
 
 [Icons]
